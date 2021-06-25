@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class File {
     private Long id;
 
     @NonNull
+    @Column(length = 4000)
     private String fileName;
 
     @NonNull

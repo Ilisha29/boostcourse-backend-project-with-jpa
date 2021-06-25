@@ -4,6 +4,7 @@ package com.minskim.boostcourse_with_jpa.domain;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -19,6 +20,7 @@ public class DisplayInfo {
     @ManyToOne
     private Product product;
 
+    @Column(length = 400)
     private String openingHours;
 
     private String placeName;

@@ -25,7 +25,8 @@ public class ReservationInfo {
     private User user;
 
     private LocalDate reservationDate;
-    private int cancelFlag;
+    
+    private int cancelFlag = 0;
     private LocalDate createDate;
     private LocalDate modifyDate;
 }
