@@ -1,6 +1,5 @@
 package com.minskim.boostcourse_with_jpa.repository;
 
-import com.minskim.boostcourse_with_jpa.domain.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +7,17 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.SQLException;
-import java.util.List;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CategoryRepositoryTest {
+@ExtendWith(SpringExtension.class)
+class ProductRepositoryTest {
     @Autowired
-    CategoryRepository categoryRepository;
+    ProductRepository productRepository;
 
     @Test
-    void getCategoryList() {
-
+    void getCountByCategoryId(){
+        assertThat(productRepository.countByCategory_Id(3L)).isEqualTo(10);
     }
 }
