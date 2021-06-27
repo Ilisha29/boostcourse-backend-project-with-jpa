@@ -20,4 +20,9 @@ class ReservationServiceImplTest {
         List<CategoryWithProductCountDto> category = reservationService.categoryListWithProductCount();
         category.stream().forEach(System.out::println);
     }
+
+    @Test
+    void getProductWithDisplayInfos() {
+        System.out.println(reservationService.productListWithDisplayInfos());
+    }
 }
