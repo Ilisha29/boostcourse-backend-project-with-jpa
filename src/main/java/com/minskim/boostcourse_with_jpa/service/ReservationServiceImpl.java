@@ -1,16 +1,11 @@
 package com.minskim.boostcourse_with_jpa.service;
 
-import com.minskim.boostcourse_with_jpa.domain.Category;
-import com.minskim.boostcourse_with_jpa.domain.DisplayInfo;
-import com.minskim.boostcourse_with_jpa.domain.Product;
-import com.minskim.boostcourse_with_jpa.domain.ProductImage;
+import com.minskim.boostcourse_with_jpa.domain.*;
 import com.minskim.boostcourse_with_jpa.dto.CategoryWithProductCountDto;
 import com.minskim.boostcourse_with_jpa.dto.ProductListWithDisplayInfos;
 import com.minskim.boostcourse_with_jpa.dto.ProductListWithDisplayInfosDto;
-import com.minskim.boostcourse_with_jpa.repository.CategoryRepository;
-import com.minskim.boostcourse_with_jpa.repository.DisplayInfoRepository;
-import com.minskim.boostcourse_with_jpa.repository.ProductImageRepository;
-import com.minskim.boostcourse_with_jpa.repository.ProductRepository;
+import com.minskim.boostcourse_with_jpa.dto.PromotionWithProductDto;
+import com.minskim.boostcourse_with_jpa.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,9 +22,10 @@ public class ReservationServiceImpl implements ReservationService {
     private final ProductRepository productRepository;
     private final DisplayInfoRepository displayInfoRepository;
     private final ProductImageRepository productImageRepository;
+    private final PromotionRepository promotionRepository;
 
     @Override
-    public List<CategoryWithProductCountDto> categoryListWithProductCount() {
+    public List<CategoryWithProductCountDto> getCategoryListWithProductCount() {
         List<CategoryWithProductCountDto> list = new ArrayList<>();
         List<Category> categories = categoryRepository.findAll();
         for (Category c : categories) {
@@ -44,7 +40,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ProductListWithDisplayInfosDto productListWithDisplayInfos() {
+    public ProductListWithDisplayInfosDto getProductListWithDisplayInfos() {
         Long categoryId = 3L;
         int start = 0;
         Page<Product> productPage = productRepository.findByCategory_Id(categoryId, PageRequest.of(start, 4));
@@ -77,5 +73,23 @@ public class ReservationServiceImpl implements ReservationService {
                 .productCount(productPage.getNumberOfElements())
                 .products(products)
                 .build();
+    }
+
+    @Override
+    public List<PromotionWithProductDto> getPromotions() {
+        List<Promotion> promotions = promotionRepository.findAll();
+        List<PromotionWithProductDto> promotionWithProductList = new ArrayList<>();
+        for (Promotion p : promotions) {
+            Product product = p.getProduct();
+            promotionWithProductList.add(PromotionWithProductDto.builder()
+                    .id(p.getId())
+                    .productId(product.getId())
+                    .categoryId(product.getCategory().getId())
+                    .categoryName(product.getCategory().getName())
+                    .description(product.getDescription())
+                    .fileId(productImageRepository.findByProduct_IdAndTypeContains(product.getId(), "ma").getFile().getId())
+                    .build());
+        }
+        return promotionWithProductList;
     }
 }

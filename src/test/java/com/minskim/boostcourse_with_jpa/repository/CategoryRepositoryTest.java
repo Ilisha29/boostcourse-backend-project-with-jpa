@@ -28,7 +28,7 @@ class CategoryRepositoryTest {
     @Transactional
     //@Rollback(value = false)
     void getCategoryList() {
-        Category category0 = new Category();
+        /*Category category0 = new Category();
         category0.setId(5L);
         category0.setName("changed");
         entityManager.merge(category0);
@@ -53,7 +53,7 @@ class CategoryRepositoryTest {
         category2.setName("updated??");
 
         entityManager.merge(category2);
-        System.out.println("======4======");
+        System.out.println("======4======");*/
     }
 }
 /*
